@@ -1,0 +1,100 @@
+.followCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-size: .8rem;
+    padding: 12px 16px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.followCard:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.followCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.followCardAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.followCardInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.followCardInfoName {
+    font-weight: bold;
+}
+
+.followCardInfoName:hover {
+    text-decoration: underline;
+}
+
+.followCardInfoUsername {
+    opacity: 0.6;
+}
+
+.followCardAside {
+    display: flex;
+    align-items: center;
+}
+
+.button {
+    font-size: 12px;
+    margin-left: 16px;
+    background: #fff;
+    color: #000;
+    border: 1px solid transparent;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 130px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #e6e6e6;
+}
+
+.isFollowing {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #536471;
+}
+
+.isFollowing:hover {
+    background: rgba(244, 33, 46, 0.1);
+    color: #f4212e;
+    border-color: #f4212e;
+}
+
+.followCardButtonText {
+    display: block;
+}
+
+.followCardButtonUnfollow {
+    display: none;
+}
+
+.isFollowing:hover .followCardButtonText {
+    display: none;
+}
+
+.isFollowing:hover .followCardButtonUnfollow {
+    display: block;
+}

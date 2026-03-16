@@ -1,0 +1,7 @@
+{
+  "name": "practica-con-react-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

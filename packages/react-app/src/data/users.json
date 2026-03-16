@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "userName": "kikobeats",
+        "name": "Kiko Beats",
+        "initialIsFollowing": true
+    },
+    {
+        "id": 2,
+        "userName": "pheralb",
+        "name": "Pablo",
+        "initialIsFollowing": false
+    },
+    {
+        "id": 3,
+        "userName": "midudev",
+        "name": "Miguel",
+        "initialIsFollowing": true
+    },
+    {
+        "id": 4,
+        "userName": "mouredev",
+        "name": "Brais",
+        "initialIsFollowing": false
+    },
+    {
+        "id": 5,
+        "userName": "elonmusk",
+        "name": "Elon Musk",
+        "initialIsFollowing": false
+    }
+]
