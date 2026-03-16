@@ -46,11 +46,13 @@ La interfaz te mostrará una lista de diferentes usuarios. Puedes interactuar co
 ```text
 src/
 ├── components/
-│   ├── TwitterFollowCard.css
-│   └── TwitterFollowCard.jsx
+│   ├── TwitterFollowCard.module.css
+│   ├── TwitterFollowCard.tsx
 ├── data/
 │   └── users.json
-├── App.jsx
+├── index.html
+├── App.tsx
+├── App.css
 ├── index.css
-└── main.jsx
+└── main.tsx
 ```
