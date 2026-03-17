@@ -1,26 +1,22 @@
-import { useState } from 'react'
 import styles from './TwitterFollowCard.module.css'
+import { useFollow } from '@/hooks/useFollow'
+import { formatUsername } from '@/utils/formatUsername.ts'
 
 interface TwitterFollowCardProps {
     userName?: string
     name?: string
     initialIsFollowing?: boolean
+    index?: number
 }
 
-const formatUsername = (userName: string): string => `@${userName}`
+export function TwitterFollowCard({ userName = "Unknown", name = "Unknown", initialIsFollowing = false, index = 0 }: TwitterFollowCardProps) {
+    const dynamicDelay = `${index * 0.1}s`;
 
-export function TwitterFollowCard({ userName = "Unknown", name = "Unknown", initialIsFollowing = false }: TwitterFollowCardProps) {
-    const [isFollowing, setIsFollowing] = useState<boolean>(initialIsFollowing)
-
-    const text: string = isFollowing ? 'Siguiendo' : 'Seguir'
+    const { isFollowing, text, handleClick } = useFollow({ initialIsFollowing })
     const buttonClassName: string = isFollowing ? `${styles.button} ${styles.isFollowing}` : styles.button
 
-    const handleClick = (): void => {
-        setIsFollowing(!isFollowing)
-    }
-
     return (
-        <article className={styles.followCard}>
+        <article className={`${styles.followCard} ${styles.fadeIn}`} style={{ '--delay': dynamicDelay } as React.CSSProperties}>
             <header className={styles.followCardHeader}>
                 <img className={styles.followCardAvatar} alt={`El avatar de ${name}`} src={`https://unavatar.io/x/${userName}`} />
                 <div className={styles.followCardInfo}>
@@ -30,13 +26,9 @@ export function TwitterFollowCard({ userName = "Unknown", name = "Unknown", init
             </header>
 
             <aside className={styles.followCardAside}>
-                <button onClick={handleClick} className={buttonClassName}>
-                    <span className={styles.followCardButtonText}>
-                        {text}
-                    </span>
-                    <span className={styles.followCardButtonUnfollow}>
-                        Dejar de seguir
-                    </span>
+                <button onClick={handleClick} className={buttonClassName} aria-pressed={isFollowing} aria-label={isFollowing ? `Dejar de seguir a ${name}` : `Seguir a ${name}`}>
+                    <span className={styles.followCardButtonText}>{text}</span>
+                    <span className={styles.followCardButtonUnfollow}>Dejar de seguir</span>
                 </button>
             </aside>
         </article>

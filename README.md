@@ -1,58 +1,60 @@
-# Clon de Tarjeta de Seguimiento de Twitter/X (React)
+# Clone de Tarjeta de Seguimiento de Twitter/X (Fullstack)
 
-Una aplicación de práctica en React que replica la funcionalidad visual y de estado de la tarjeta para seguir usuarios en Twitter/X.
+Una aplicación práctica que replica la funcionalidad de seguimiento de Twitter/X, ahora con una arquitectura desacoplada de cliente y servidor.
 
 ## Acerca del Proyecto
 
-Este proyecto es una aplicación modular en React construida para practicar el manejo de estados (`useState`), composición de componentes y renderizado de listas. Incluye un componente completo `TwitterFollowCard` que maneja los diferentes estados al seguir o dejar de seguir a un usuario, incluyendo efectos visuales que imitan el comportamiento de la interfaz real de Twitter/X. La aplicación consume un archivo JSON local de datos para renderizar dinámicamente varios usuarios.
+    Este proyecto es una aplicación fullstack diseñada para practicar la integración de una interfaz dinámica en React con una API real en Node.js. 
+
+- **Frontend**: Utiliza React 19 y TypeScript para manejar estados complejos de seguimiento y composición de componentes.
+- **Backend**: Un servidor Express minimalista que sirve datos desde un archivo JSON centralizado, preparándolo para una futura integración con MongoDB.
+- **Interacción**: El componente `TwitterFollowCard` imita fielmente la UX de Twitter, incluyendo cambios de estado visuales (hover destructivo) al seguir/dejar de seguir.
+
+## Estructura del Proyecto
+
+    ```text
+react-app/
+├── client/          # Aplicación Frontend (Vite + React)
+├── serv/            # API Backend (Node.js + Express)
+└── data/            # Fuente de datos centralizada (JSON)
+    ```
 
 ## Tecnologías Utilizadas
 
-- **Framework**: React 19
-- **Build Tool**: Vite 8
-- **Estilos**: Vanilla CSS
+- **Frontend**: React 19, Vite 8, TypeScript, Vanilla CSS.
+- **Backend**: Node.js, Express, CORS.
 
 ## Cómo Empezar
 
 ### Prerrequisitos
 
-- Node.js (se recomienda versión 18 o superior)
-- npm o cualquier otro gestor de paquetes
+- Node.js >= 18
+- npm o yarn
 
-### Instalación
+### Instalación y Ejecución
 
-```bash
-# Navega al directorio de la aplicación React (si estás en la raíz del monorepo)
-cd packages/react-app
+Para que la aplicación funcione correctamente, debes iniciar tanto el servidor como el cliente:
 
-# Instala las dependencias necesarias
+#### 1. Iniciar el Servidor (API)
+
+    ```bash
+cd react-app/serv
 npm install
+npm start
+    ```
 
-# Inicia el servidor de desarrollo local
+#### 2. Iniciar el Cliente (React)
+
+    ```bash
+cd react-app/client
+npm install
 npm run dev
-```
+    ```
 
 ## Uso
 
-Una vez que el servidor de desarrollo esté ejecutándose, abre tu navegador en la URL local que te proporciona Vite (habitualmente `http://localhost:5173`).
+Una vez iniciados ambos servicios:
 
-La interfaz te mostrará una lista de diferentes usuarios. Puedes interactuar con los botones de "Seguir" para visualizar los cambios dinámicos:
-
-- Al hacer click en **"Seguir"**, el botón cambia su estado interno a **"Siguiendo"** y ajusta sus estilos.
-- Al pasar el ratón (hover) sobre un botón que dice **"Siguiendo"**, este cambia a un color de advertencia revelando la acción de **"Dejar de seguir"**, replicando exactamente la UX destructiva moderna de las redes sociales.
-
-## Estructura del Proyecto
-
-```text
-src/
-├── components/
-│   ├── TwitterFollowCard.module.css
-│   ├── TwitterFollowCard.tsx
-├── data/
-│   └── users.json
-├── index.html
-├── App.tsx
-├── App.css
-├── index.css
-└── main.tsx
-```
+1. Abre tu navegador en la URL del cliente (habitualmente `http://localhost:5173`).
+2. La aplicación cargará los usuarios consultando automáticamente a la API local (`http://localhost:3000/api/users`).
+3. Interactúa con las tarjetas para ver los cambios de estado y estilos dinámicos.

@@ -1,0 +1,14 @@
+{
+  "name": "serv",
+  "version": "1.0.0",
+  "description": "Simple API for react-app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

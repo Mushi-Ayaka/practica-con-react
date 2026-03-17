@@ -83,6 +83,12 @@
     border-color: #f4212e;
 }
 
+.followCardButtonSkeleton {
+    display: block;
+    background-color: #e6e6e6;
+    color: #e6e6e6;
+}
+
 .followCardButtonText {
     display: block;
 }
@@ -97,4 +103,62 @@
 
 .isFollowing:hover .followCardButtonUnfollow {
     display: block;
+}
+
+.skeleton {
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.skeletonAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #e6e6e6;
+}
+
+.skeletonText {
+    width: 100%;
+    height: 16px;
+    background-color: #e6e6e6;
+    margin-bottom: 4px;
+}
+
+.skeletonTextShort {
+    width: 60%;
+    height: 16px;
+    opacity: 0.6;
+    background-color: #e6e6e6;
+}
+
+
+.fadeIn {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -1,3 +1,13 @@
+:root {
+    --x-border: #2f3336;
+    --x-bg: #000000;
+    --x-text-main: #eff3f4;
+    --x-text-gray: #71767b;
+    --x-blue: #1d9bf0;
+    --x-red: #f4212e;
+    --x-skeleton: #16181c;
+}
+
 .App {
     display: flex;
     flex-direction: column;

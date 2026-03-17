@@ -2,6 +2,20 @@
   "name": "practica-con-react-monorepo",
   "private": true,
   "workspaces": [
-    "packages/*"
-  ]
+    "react-app/*"
+  ],
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.21"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^25.5.0",
+    "jsdom": "^29.0.0",
+    "vitest": "^4.1.0"
+  },
+  "scripts": {
+    "test": "vitest"
+  }
 }

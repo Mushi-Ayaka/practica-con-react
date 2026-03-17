@@ -15,13 +15,42 @@
         "moduleDetection": "force",
         "noEmit": true,
         "jsx": "react-jsx",
+        "types": [
+            "vitest/globals",
+            "@testing-library/jest-dom",
+            "node"
+        ],
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./react-app/client/src/*"
+            ],
+            "@components/*": [
+                "./react-app/client/src/components/*"
+            ],
+            "@hooks/*": [
+                "./react-app/client/src/hooks/*"
+            ],
+            "@utils/*": [
+                "./react-app/client/src/utils/*"
+            ],
+            "@assets/*": [
+                "./react-app/client/src/assets/*"
+            ],
+            "@services/*": [
+                "./react-app/client/src/services/*"
+            ],
+            "@tests/*": [
+                "./react-app/client/src/tests/*"
+            ]
+        }
     },
     "include": [
-        "packages/react-app/src"
+        "react-app/client/src"
     ],
     "exclude": [
         "node_modules"
