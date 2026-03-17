@@ -1,6 +1,6 @@
 import './App.css'
 import { fetchUsers } from './services/UserServices'
-import { TwitterFollowCard } from './components/TwitterFollowCard.tsx'
+import { TwitterFollowCard } from './components/TwitterFollowCard'
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { SkeletonFollowCard } from './components/SkeletonFollowCard.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -28,7 +28,7 @@ export function App() {
 
                 {isLoading ? (
                     Array.from({ length: 5 }).map((_, index) => (
-                        <SkeletonFollowCard key={index} />
+                        <SkeletonFollowCard key={index} index={index} />
                     ))
                 ) : (
                     users?.map(({ id, userName, name, initialIsFollowing }, index) => (

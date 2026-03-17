@@ -2,7 +2,22 @@ import { FallbackProps } from 'react-error-boundary';
 import styles from './ErrorFallback.module.css';
 
 export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
-    const errorMessage = error instanceof Error ? error.message : 'Algo salió mal';
+    let errorMessage = 'Algo salió mal';
+
+    if (typeof error === 'string') {
+        errorMessage = error;
+    } else if (error instanceof Error) {
+        errorMessage = error.message;
+    } else if (error && typeof (error as any).message === 'string') {
+        errorMessage = (error as any).message;
+    } else {
+        try {
+            const asString = String(error);
+            if (asString && asString !== 'undefined') errorMessage = asString;
+        } catch {
+            // keep default
+        }
+    }
 
     return (
         <div className={styles.container} role="alert">

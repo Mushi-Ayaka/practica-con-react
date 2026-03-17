@@ -18,4 +18,4 @@ root.render(
       </StrictMode>
     </ErrorBoundary>
   </QueryClientProvider>
-)
+);

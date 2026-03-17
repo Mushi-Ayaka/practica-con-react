@@ -12,8 +12,13 @@ export const fetchUsers = async (): Promise<User[]> => {
     // await new Promise(resolve => setTimeout(resolve, 3000));
 
     try {
+        // Avoid sending Content-Type header on GET requests to prevent unnecessary CORS preflight
+        const headers = Object.fromEntries(
+            Object.entries(API_CONFIG.headers || {}).filter(([k]) => k.toLowerCase() !== 'content-type')
+        );
+
         const response = await fetch(`${API_CONFIG.baseURL}/users`, {
-            headers: API_CONFIG.headers
+            headers
         });
 
         if (!response.ok) {

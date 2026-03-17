@@ -24,7 +24,13 @@ app.get('/api/users', (req, res) => {
             console.error(err);
             return res.status(500).json({ error: 'Error reading user data' });
         }
-        res.json(JSON.parse(data));
+        try {
+            const users = JSON.parse(data);
+            return res.json(users);
+        } catch (parseErr) {
+            console.error(parseErr);
+            return res.status(500).json({ error: 'Error parsing user data' });
+        }
     });
 });
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export function useFollow({ initialIsFollowing = false }: { initialIsFollowing: boolean }) {
+export function useFollow({ initialIsFollowing = false }: { initialIsFollowing?: boolean } = {}) {
 
     const [isFollowing, setIsFollowing] = useState<boolean>(initialIsFollowing)
 
