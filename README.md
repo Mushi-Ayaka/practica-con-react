@@ -1,60 +1,126 @@
-# Clone de Tarjeta de Seguimiento de Twitter/X (Fullstack)
+# Twitter/X Follow Card — Fullstack Clone
 
-Una aplicación práctica que replica la funcionalidad de seguimiento de Twitter/X, ahora con una arquitectura desacoplada de cliente y servidor.
+Aplicación fullstack que replica la experiencia de las tarjetas de seguimiento de Twitter/X, construida con React 19, TypeScript y un servidor Express.
 
 ## Acerca del Proyecto
 
-    Este proyecto es una aplicación fullstack diseñada para practicar la integración de una interfaz dinámica en React con una API real en Node.js. 
+Este proyecto implementa una réplica fiel de las tarjetas de "Seguir" de Twitter/X con una arquitectura cliente-servidor desacoplada. El frontend consume una API REST propia para obtener la lista de usuarios, renderiza tarjetas interactivas con animaciones de entrada escalonadas, estados de carga tipo skeleton y manejo robusto de errores mediante `ErrorBoundary`. El componente `TwitterFollowCard` reproduce la UX original de Twitter, incluyendo el efecto hover destructivo ("Dejar de seguir") con cambios de estado visuales inmediatos.
 
-- **Frontend**: Utiliza React 19 y TypeScript para manejar estados complejos de seguimiento y composición de componentes.
-- **Backend**: Un servidor Express minimalista que sirve datos desde un archivo JSON centralizado, preparándolo para una futura integración con MongoDB.
-- **Interacción**: El componente `TwitterFollowCard` imita fielmente la UX de Twitter, incluyendo cambios de estado visuales (hover destructivo) al seguir/dejar de seguir.
+## Tech Stack
+
+| Capa | Tecnologías |
+|------|------------|
+| **Frontend** | React 19, TypeScript, Vite 8, CSS Modules |
+| **Backend** | Node.js, Express 4, ES Modules |
+| **Data Fetching** | TanStack React Query v5 |
+| **Manejo de Errores** | react-error-boundary |
+| **Testing** | Vitest, Testing Library, jsdom |
+| **Linting** | ESLint 9, eslint-plugin-react-hooks |
 
 ## Estructura del Proyecto
 
-    ```text
-react-app/
-├── client/          # Aplicación Frontend (Vite + React)
-├── serv/            # API Backend (Node.js + Express)
-└── data/            # Fuente de datos centralizada (JSON)
-    ```
-
-## Tecnologías Utilizadas
-
-- **Frontend**: React 19, Vite 8, TypeScript, Vanilla CSS.
-- **Backend**: Node.js, Express, CORS.
+```text
+practica-con-react/
+├── react-app/
+│   ├── client/                # Aplicación Frontend
+│   │   ├── src/
+│   │   │   ├── components/    # TwitterFollowCard, SkeletonFollowCard, ErrorFallback
+│   │   │   ├── hooks/         # useFollow (estado de seguimiento)
+│   │   │   ├── services/      # UserServices, api.config
+│   │   │   └── utils/         # formatUsername
+│   │   └── vite.config.ts     # Config de Vite + path aliases (@/, @components/, etc.)
+│   ├── serv/                  # API Backend (Express)
+│   │   └── index.js           # Servidor con endpoint GET /api/users
+│   └── data/
+│       └── users.json         # Fuente de datos centralizada
+├── tsconfig.json              # Config TypeScript con path aliases
+├── package.json               # Monorepo con npm workspaces
+└── .gitignore
+```
 
 ## Cómo Empezar
 
 ### Prerrequisitos
 
 - Node.js >= 18
-- npm o yarn
+- npm
 
-### Instalación y Ejecución
+### Instalación
 
-Para que la aplicación funcione correctamente, debes iniciar tanto el servidor como el cliente:
+```bash
+git clone https://github.com/Mushi-Ayaka/practica-con-react.git
+cd practica-con-react
+npm install
+```
 
-#### 1. Iniciar el Servidor (API)
+### Ejecución
 
-    ```bash
+La aplicación requiere que tanto el servidor como el cliente estén corriendo simultáneamente.
+
+**1. Iniciar el servidor (API):**
+
+```bash
 cd react-app/serv
-npm install
 npm start
-    ```
+```
 
-#### 2. Iniciar el Cliente (React)
+El servidor arranca en `http://localhost:3000`.
 
-    ```bash
+**2. Iniciar el cliente (React) — en otra terminal:**
+
+```bash
 cd react-app/client
-npm install
 npm run dev
-    ```
+```
+
+El cliente arranca en `http://localhost:5173`.
 
 ## Uso
 
-Una vez iniciados ambos servicios:
+1. Abre `http://localhost:5173` en tu navegador.
+2. La aplicación consulta automáticamente `GET /api/users` y renderiza las tarjetas con animaciones de entrada escalonadas.
+3. Mientras la data carga, se muestran skeletons animados como placeholder visual.
+4. Haz clic en **Seguir** para seguir a un usuario — el botón cambia a **Siguiendo**.
+5. Pasa el cursor sobre **Siguiendo** para ver el estado destructivo **Dejar de seguir**, idéntico a la UX de Twitter/X.
 
-1. Abre tu navegador en la URL del cliente (habitualmente `http://localhost:5173`).
-2. La aplicación cargará los usuarios consultando automáticamente a la API local (`http://localhost:3000/api/users`).
-3. Interactúa con las tarjetas para ver los cambios de estado y estilos dinámicos.
+## API Reference
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| `GET` | `/api/users` | Retorna la lista de usuarios desde `data/users.json` |
+
+**Ejemplo de respuesta:**
+
+```json
+[
+  {
+    "id": 1,
+    "userName": "midudev",
+    "name": "Miguel",
+    "initialIsFollowing": true
+  }
+]
+```
+
+## Testing
+
+El proyecto utiliza **Vitest** con **Testing Library** para tests unitarios y de componentes.
+
+```bash
+npm test
+```
+
+Los tests verifican:
+- Que `TwitterFollowCard` alterna correctamente el texto del botón al hacer clic.
+- Que `formatUsername` agrega el prefijo `@` al nombre de usuario.
+
+## Características Técnicas
+
+- **CSS Modules** para estilos encapsulados y sin colisiones de nombres.
+- **Path aliases** (`@/`, `@components/`, `@hooks/`, etc.) configurados tanto en Vite como en TypeScript para imports limpios.
+- **TanStack React Query** para data fetching declarativo con cache automático.
+- **Error Boundaries** a dos niveles: uno global en `main.tsx` y otro granular en `App.tsx`, ambos con UI de fallback en español.
+- **Skeleton loading** como placeholders visuales durante la carga de datos.
+- **Animaciones de entrada escalonadas** con CSS `@keyframes` y delays dinámicos por índice.
+- **Accesibilidad**: botones con `aria-pressed` y `aria-label` dinámicos.
+- **npm Workspaces** para manejar el monorepo con dependencias compartidas.
