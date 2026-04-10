@@ -1,21 +1,31 @@
 {
   "name": "practica-con-react-monorepo",
   "private": true,
-  "workspaces": [
-    "react-app/*"
-  ],
   "dependencies": {
-    "@tanstack/react-query": "^5.90.21"
+    "@prisma/adapter-pg": "^7.7.0",
+    "@prisma/client": "^7.7.0",
+    "@tanstack/react-query": "^5.90.21",
+    "dotenv": "^17.4.1",
+    "pg": "^8.20.0",
+    "standard": "^17.1.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.5.0",
+    "@types/pg": "^8.20.0",
     "jsdom": "^29.0.0",
+    "prisma": "^7.7.0",
     "vitest": "^4.1.0"
   },
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "standard",
+    "db:seed": "npx prisma db seed --schema react-app/database/prisma/schema.prisma"
+  },
+  "type": "module",
+  "prisma": {
+    "seed": "tsx react-app/database/prisma/seed.ts"
   }
 }

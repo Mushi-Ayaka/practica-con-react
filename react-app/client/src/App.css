@@ -9,9 +9,6 @@
 }
 
 .App {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     background-color: #000000;
     border: 1px solid #2f3336;
     border-radius: 16px;

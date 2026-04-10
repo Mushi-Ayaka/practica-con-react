@@ -4,18 +4,18 @@ import { StrictMode } from 'react'
 import { App } from './App.tsx'
 import './index.css'
 import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorFallback } from './components/ErrorFallback.tsx';
+import { UserError } from '@features/users/components/UserError';
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ErrorBoundary FallbackComponent={UserError}>
         <App />
-      </StrictMode>
-    </ErrorBoundary>
-  </QueryClientProvider>
+      </ErrorBoundary>
+    </QueryClientProvider>
+  </StrictMode>
 );

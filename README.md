@@ -9,7 +9,7 @@ Este proyecto implementa una réplica fiel de las tarjetas de "Seguir" de Twitte
 ## Tech Stack
 
 | Capa | Tecnologías |
-|------|------------|
+| ------ | ------------ |
 | **Frontend** | React 19, TypeScript, Vite 8, CSS Modules |
 | **Backend** | Node.js, Express 4, ES Modules |
 | **Data Fetching** | TanStack React Query v5 |
@@ -86,7 +86,7 @@ El cliente arranca en `http://localhost:5173`.
 ## API Reference
 
 | Método | Endpoint | Descripción |
-|--------|----------|-------------|
+| -------- | ---------- | ------------- |
 | `GET` | `/api/users` | Retorna la lista de usuarios desde `data/users.json` |
 
 **Ejemplo de respuesta:**
@@ -111,6 +111,7 @@ npm test
 ```
 
 Los tests verifican:
+
 - Que `TwitterFollowCard` alterna correctamente el texto del botón al hacer clic.
 - Que `formatUsername` agrega el prefijo `@` al nombre de usuario.
 
