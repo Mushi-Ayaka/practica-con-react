@@ -38,15 +38,10 @@ __pycache__/
 
 # Scratch y Temporales
 scratch/
-auditory/
+skills-lock.json
 walkthrough.md
 implementation_plan.md
 task.md
 
 # Git configuration
 **/.gitignore
-
-
-
-
-skills-lock.json
