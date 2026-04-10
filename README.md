@@ -1,127 +1,72 @@
 # Twitter/X Follow Card — Fullstack Clone
 
-Aplicación fullstack que replica la experiencia de las tarjetas de seguimiento de Twitter/X, construida con React 19, TypeScript y un servidor Express.
+Aplicación fullstack que replica la experiencia de las tarjetas de seguimiento de Twitter/X, con **persistencia real de datos** mediante Prisma y Supabase.
 
 ## Acerca del Proyecto
 
-Este proyecto implementa una réplica fiel de las tarjetas de "Seguir" de Twitter/X con una arquitectura cliente-servidor desacoplada. El frontend consume una API REST propia para obtener la lista de usuarios, renderiza tarjetas interactivas con animaciones de entrada escalonadas, estados de carga tipo skeleton y manejo robusto de errores mediante `ErrorBoundary`. El componente `TwitterFollowCard` reproduce la UX original de Twitter, incluyendo el efecto hover destructivo ("Dejar de seguir") con cambios de estado visuales inmediatos.
+Este proyecto es una evolución de una maqueta estática hacia una aplicación funcional completa. Se implementó un flujo de datos bidireccional donde el estado de seguimiento ("Following") ya no es efímero, sino que se persiste en una base de datos PostgreSQL con Supabase. El sistema utiliza **actualizaciones optimistas** mediante TanStack Query para una experiencia de usuario instantánea y fluida.
 
-## Tech Stack
+## Stack
 
 | Capa | Tecnologías |
 | ------ | ------------ |
 | **Frontend** | React 19, TypeScript, Vite 8, CSS Modules |
-| **Backend** | Node.js, Express 4, ES Modules |
-| **Data Fetching** | TanStack React Query v5 |
-| **Manejo de Errores** | react-error-boundary |
-| **Testing** | Vitest, Testing Library, jsdom |
-| **Linting** | ESLint 9, eslint-plugin-react-hooks |
+| **Backend** | Node.js, Express 4, Prisma 7 (Driver Adapter) |
+| **BBDD** | PostgreSQL (Supabase) |
+| **Data Fetching** | TanStack React Query v5 (con Invalidation) |
+| **Testing** | Vitest, Testing Library |
+| **Estilos** | Vanilla CSS (Flujo Gentleman-Skills) |
 
 ## Estructura del Proyecto
 
 ```text
 practica-con-react/
 ├── react-app/
-│   ├── client/                # Aplicación Frontend
-│   │   ├── src/
-│   │   │   ├── components/    # TwitterFollowCard, SkeletonFollowCard, ErrorFallback
-│   │   │   ├── hooks/         # useFollow (estado de seguimiento)
-│   │   │   ├── services/      # UserServices, api.config
-│   │   │   └── utils/         # formatUsername
-│   │   └── vite.config.ts     # Config de Vite + path aliases (@/, @components/, etc.)
-│   ├── serv/                  # API Backend (Express)
-│   │   └── index.js           # Servidor con endpoint GET /api/users
-│   └── data/
-│       └── users.json         # Fuente de datos centralizada
-├── tsconfig.json              # Config TypeScript con path aliases
-├── package.json               # Monorepo con npm workspaces
-└── .gitignore
+│   ├── client/                # Aplicación Frontend (Vite + React)
+│   ├── server/                # API Backend (Express + Prisma)
+│   │   ├── controllers/       # Lógica de orquestación
+│   │   ├── models/            # Lógica de datos (Prisma queries)
+│   │   └── routes/            # Definición de endpoints
+│   └── database/              # Infraestructura de datos
+│       ├── prisma/            # Esquemas y migraciones
+│       └── users.json         # Datos semilla iniciales
 ```
 
 ## Cómo Empezar
 
 ### Prerrequisitos
 
-- Node.js >= 18
-- npm
+- Node.js >= 20 (Recomendado para compatibilidad con Prisma 7)
+- Cuenta en **Supabase** (para la base de datos remota)
 
-### Instalación
+### Configuración del Entorno
 
-```bash
-git clone https://github.com/Mushi-Ayaka/practica-con-react.git
-cd practica-con-react
-npm install
+Crea un archivo `.env` en `react-app/server/` con tus credenciales:
+
+```env
+DATABASE_URL="postgresql://user:pass@host:port/postgres"
+DATABASE_URL_POOLING="postgresql://user:pass@host:port/postgres?pgbouncer=true"
 ```
 
-### Ejecución
+### Instalación y Ejecución
 
-La aplicación requiere que tanto el servidor como el cliente estén corriendo simultáneamente.
-
-**1. Iniciar el servidor (API):**
-
-```bash
-cd react-app/serv
-npm start
-```
-
-El servidor arranca en `http://localhost:3000`.
-
-**2. Iniciar el cliente (React) — en otra terminal:**
-
-```bash
-cd react-app/client
-npm run dev
-```
-
-El cliente arranca en `http://localhost:5173`.
-
-## Uso
-
-1. Abre `http://localhost:5173` en tu navegador.
-2. La aplicación consulta automáticamente `GET /api/users` y renderiza las tarjetas con animaciones de entrada escalonadas.
-3. Mientras la data carga, se muestran skeletons animados como placeholder visual.
-4. Haz clic en **Seguir** para seguir a un usuario — el botón cambia a **Siguiendo**.
-5. Pasa el cursor sobre **Siguiendo** para ver el estado destructivo **Dejar de seguir**, idéntico a la UX de Twitter/X.
+1. **Instalar dependencias:** `npm install` (desde la raíz)
+2. **Levantar el Servidor:** `cd react-app/server && npm run dev`
+3. **Levantar el Cliente:** `cd react-app/client && npm run dev`
 
 ## API Reference
 
 | Método | Endpoint | Descripción |
 | -------- | ---------- | ------------- |
-| `GET` | `/api/users` | Retorna la lista de usuarios desde `data/users.json` |
+| `GET` | `/api/users` | Obtiene todos los usuarios ordenados alfabéticamente. |
+| `PATCH` | `/api/users/:id/follow` | Alterna el estado de seguimiento de un usuario. |
 
-**Ejemplo de respuesta:**
+## Características Destacadas
 
-```json
-[
-  {
-    "id": 1,
-    "userName": "midudev",
-    "name": "Miguel",
-    "initialIsFollowing": true
-  }
-]
-```
+- **Persistencia Real:** Los cambios sobreviven a reinicios de servidor gracias a la integración con Supabase.
+- **Pooling Mode:** Conexiones estables de base de datos usando PGBouncer para evitar cierres inesperados durante HMR.
+- **Zero Flicker UX:** Uso de `isPending` en lugar de `isLoading` para evitar parpadeos de Skeletons durante las actualizaciones en segundo plano.
+- **Seed Inteligente:** Script de siembra no destructivo que utiliza `upsert` para mantener los datos existentes.
 
-## Testing
-
-El proyecto utiliza **Vitest** con **Testing Library** para tests unitarios y de componentes.
-
-```bash
-npm test
-```
-
-Los tests verifican:
-
-- Que `TwitterFollowCard` alterna correctamente el texto del botón al hacer clic.
-- Que `formatUsername` agrega el prefijo `@` al nombre de usuario.
-
-## Características Técnicas
-
-- **CSS Modules** para estilos encapsulados y sin colisiones de nombres.
-- **Path aliases** (`@/`, `@components/`, `@hooks/`, etc.) configurados tanto en Vite como en TypeScript para imports limpios.
-- **TanStack React Query** para data fetching declarativo con cache automático.
-- **Error Boundaries** a dos niveles: uno global en `main.tsx` y otro granular en `App.tsx`, ambos con UI de fallback en español.
-- **Skeleton loading** como placeholders visuales durante la carga de datos.
-- **Animaciones de entrada escalonadas** con CSS `@keyframes` y delays dinámicos por índice.
-- **Accesibilidad**: botones con `aria-pressed` y `aria-label` dinámicos.
-- **npm Workspaces** para manejar el monorepo con dependencias compartidas.
+---
+Proyecto desarrollado como práctica de arquitectura en React.
