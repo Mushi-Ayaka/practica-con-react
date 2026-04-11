@@ -1,5 +1,6 @@
 {
   "name": "practica-con-react-monorepo",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@prisma/adapter-pg": "^7.7.0",

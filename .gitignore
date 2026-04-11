@@ -40,8 +40,7 @@ __pycache__/
 scratch/
 skills-lock.json
 walkthrough.md
-implementation_plan.md
-task.md
+
 
 # Git configuration
 **/.gitignore
