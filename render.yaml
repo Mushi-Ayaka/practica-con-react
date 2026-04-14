@@ -3,9 +3,9 @@ services:
     name: practica-react-server
     env: node
     plan: free
-    rootDir: react-app/server
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    rootDir: .
+    buildCommand: corepack enable pnpm && pnpm install && cd react-app/server && pnpm run build
+    startCommand: cd react-app/server && pnpm run start
     envVars:
       - key: NODE_ENV
         value: production
