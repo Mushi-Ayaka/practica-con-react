@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: practica-react-server
+    env: node
+    plan: free
+    rootDir: react-app/server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_URL_POOLING
+        sync: false
+      - key: ACCEPTED_ORIGINS
+        sync: false
