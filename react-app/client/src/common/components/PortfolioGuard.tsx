@@ -9,7 +9,12 @@ export const PortfolioGuard: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const referrer = document.referrer;
-    const allowedReferrer = import.meta.env.VITE_ALLOWED_REFERRER || 'localhost';
+    const ALLOWED_REFERRERS = [
+      'portafolio-jonatan-baron.vercel.app',
+      'jonatanbaron.com',
+      'localhost',
+      ...(import.meta.env.VITE_ALLOWED_REFERRER ? [import.meta.env.VITE_ALLOWED_REFERRER] : []),
+    ];
     
     // Si ya validamos en esta sesión, evitar re-chequeo
     const hasAccess = sessionStorage.getItem('demo_access_granted');
@@ -21,7 +26,7 @@ export const PortfolioGuard: React.FC<Props> = ({ children }) => {
 
     // Validación básica de Referrer
     // En producción, esto debería ser el dominio de tu portafolio
-    if (referrer.includes(allowedReferrer) || window.location.hostname === 'localhost') {
+    if (ALLOWED_REFERRERS.some(r => referrer.includes(r)) || window.location.hostname === 'localhost') {
       sessionStorage.setItem('demo_access_granted', 'true');
       setIsAuthorized(true);
     } else {
